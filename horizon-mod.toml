@@ -1,0 +1,8 @@
+id = "titanium"
+name = "TITANIUM"
+version = "0.1.0"
+description = "TITANIUM Horizon content-mod compatibility foundation."
+authors = ["ZYVIX"]
+api = "0.2"
+side = "both"
+capabilities = ["registries"]
