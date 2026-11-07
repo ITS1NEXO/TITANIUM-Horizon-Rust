@@ -1,0 +1,13 @@
+[mod]
+id = "titanium"
+version = "0.2.0"
+priority = 100
+
+[compatibility]
+horizon_revision = "ba6344a59cb9e755b730dcf02285fc0d33b97d3c"
+
+[[module]]
+id = "runtime"
+file = "crates/horizon-client/src/game.rs"
+name = "titanium"
+source = "runtime.rs"
