@@ -1,37 +1,48 @@
-# TITANIUM — Horizon Performance
+# TITANIUM — Minecraft Dressing Room Mod
 
 **Creator:** ZYVIX  
-**Target:** Horizon `.hmod` content-mod format (API 0.2)  
-**Package ID:** `titanium`
+**Project:** TITANIUM  
+**Target:** Horizon Rust  
+**Mod category:** Dressing Room  
+**Planned package formats:** `.hnmod` and `.hmod`
+
+## Overview
+
+TITANIUM is a Minecraft Dressing Room mod for Horizon Rust. Its purpose is to extend or customize the Dressing Room experience rather than act as an FPS-optimization mod.
+
+TITANIUM is developed independently. The separate HorizDroid project has been discontinued; TITANIUM does not depend on HorizDroid.
+
+## Package formats
+
+The project targets both Horizon mod package formats:
+
+- **`.hmod`** — content-mod package.
+- **`.hnmod`** — native-mod package.
+
+The two formats are separate build outputs. A successful build must package each format according to its own supported manifest, contents, and compatibility requirements; simply renaming one archive is not valid format conversion.
 
 ## Current status
 
-This repository starts with a verified-format foundation and an automated `.hmod` packaging workflow. It is **not yet an FPS optimization mod**.
+The repository previously contained an API 0.2 `.hmod` compatibility foundation. That foundation is not, by itself, a completed Dressing Room implementation, and it does not establish that a working `.hnmod` build is available.
 
-Horizon API 0.2 content mods are data-only. They can add supported blocks, items, recipes, loot, tags, models and textures in the mod's own namespace. They cannot run code or directly change the renderer, frame pacing, existing particle systems, or game performance settings.
+The Dressing Room feature set and format-specific packaging still need implementation and validation against the target Horizon Rust build.
 
-Because this project is intentionally `.hmod`-only for compatibility with the target Android launcher, those engine-level optimizations are out of scope unless that launcher later supports a suitable code-mod API.
+## Build and validation
 
-## Build
+Build artifacts should be produced independently for `.hmod` and `.hnmod`. Each output must pass its corresponding format checks and be tested in Horizon Rust before being described as supported.
 
-GitHub Actions packages the repository's `horizon-mod.toml`, `assets/` and `data/` into `TITANIUM-0.1.0.hmod` and uploads it as an artifact.
+Do not treat a successful ZIP/package step as proof that the mod loads or that its Dressing Room features work in-game.
 
-The workflow checks the manifest and archive structure. This is a packaging check, **not proof that every Horizon build or unofficial Android fork can load the mod**.
+## Development goals
 
-## Compatibility
+1. Implement the intended Dressing Room features.
+2. Build a valid `.hmod` package.
+3. Build a valid `.hnmod` package.
+4. Validate both packages against their respective format requirements.
+5. Test both outputs in Horizon Rust and document verified compatibility.
 
-- Manifest API: `0.2`
-- Format: ZIP-based `.hmod`
-- Code/WASM: none
-- Native `.hnmod`: not used
+## Credits
 
-Official references:
-- https://playhorizon.dev/docs/content-mods
-- https://github.com/horizon-rust/horizon/blob/main/docs/mods.md
+Created by **ZYVIX**.
 
-## Roadmap
-
-1. Confirm that the target Android Horizon fork accepts API 0.2 content mods.
-2. Identify a useful, supported content-only feature before adding assets or data.
-3. Test the resulting artifact in the target launcher.
-4. Only describe performance benefits if an actual before/after test demonstrates them.
+TITANIUM is an unofficial community project and is not affiliated with or endorsed by Mojang or Microsoft.
