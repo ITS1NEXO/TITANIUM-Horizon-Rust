@@ -1,45 +1,56 @@
-# TITANIUM — Minecraft Dressing Room Mod
+# TITANIUM — Horizon Rust Skin Customizer
 
 **Creator:** ZYVIX  
-**Project:** TITANIUM  
-**Target:** Horizon Rust  
-**Mod category:** Dressing Room  
-**Planned package formats:** `.hnmod` and `.hmod`
+**Target:** Horizon Rust (Minecraft: Java Edition rewritten in Rust)  
+**Purpose:** Local player-skin importing, previewing and switching  
+**Planned outputs:** `.hnmod` native mod and an optional `.hmod` content pack
 
 ## Overview
 
-TITANIUM is a Minecraft Dressing Room mod for Horizon Rust. Its purpose is to extend or customize the Dressing Room experience rather than act as an FPS-optimization mod.
+TITANIUM is an independent Horizon Rust mod project focused on a Dressing Room-style skin customizer. It is not a Bedrock add-on and does not use Bedrock's Dressing Room APIs.
 
-TITANIUM is developed independently. The separate HorizDroid project has been discontinued; TITANIUM does not depend on HorizDroid.
+HorizDroid has been discontinued. TITANIUM continues independently and does not depend on HorizDroid.
 
-## Package formats
+## Planned skin features
 
-The project targets both Horizon mod package formats:
+- Import a local Minecraft skin PNG.
+- Preview the selected skin before applying it.
+- Select the player model: **Classic (4-pixel arms)** or **Slim (3-pixel arms)**.
+- Save imported skins locally and switch between saved skins.
+- Keep the selected skin and model choice between game sessions.
 
-- **`.hmod`** — content-mod package.
-- **`.hnmod`** — native-mod package.
+These are project goals, not claims about features already implemented.
 
-The two formats are separate build outputs. A successful build must package each format according to its own supported manifest, contents, and compatibility requirements; simply renaming one archive is not valid format conversion.
+## Horizon package architecture
+
+Horizon has two distinct mod formats:
+
+- **`.hnmod` — Native mod:** Rust code that adds behaviour and can hook into the game. This is the required format for a skin importer, UI, local file handling and player-render integration.
+- **`.hmod` — Content mod:** Data and assets only. It cannot implement the importer or change game behaviour by itself. It may be used for optional bundled assets if TITANIUM needs them.
+
+The formats are not interchangeable. A package must be built and validated using the correct tooling; renaming an archive is not conversion.
+
+Horizon exposes a native player-render hook that allows a mod to draw a player's model itself. That is a possible rendering integration point, but it is not a ready-made skin-import API. TITANIUM still needs to implement and test PNG handling, model geometry/UV mapping, preview UI, persistence and rendering against the target Horizon revision.
 
 ## Current status
 
-The repository previously contained an API 0.2 `.hmod` compatibility foundation. That foundation is not, by itself, a completed Dressing Room implementation, and it does not establish that a working `.hnmod` build is available.
+The repository currently contains only an early API 0.2 content-mod packaging foundation. It does **not** yet contain the skin importer, a native-mod implementation, or a verified in-game Dressing Room UI.
 
-The Dressing Room feature set and format-specific packaging still need implementation and validation against the target Horizon Rust build.
+The existing `.hmod` artifact is therefore a packaging foundation only, not a usable skin customizer. A working `.hnmod` has not yet been built.
+
+## Development milestones
+
+1. Establish the native-mod template and pin a tested Horizon revision.
+2. Implement PNG validation and local skin-library storage.
+3. Implement Classic and Slim model selection and skin preview.
+4. Integrate the custom skin with the player renderer, without claiming support until tested.
+5. Build and validate the `.hnmod` with Horizon's native-mod tooling.
+6. Keep a separate `.hmod` output only if TITANIUM has actual content assets to package.
+7. Test in Horizon Rust and document the exact supported build.
 
 ## Build and validation
 
-Build artifacts should be produced independently for `.hmod` and `.hnmod`. Each output must pass its corresponding format checks and be tested in Horizon Rust before being described as supported.
-
-Do not treat a successful ZIP/package step as proof that the mod loads or that its Dressing Room features work in-game.
-
-## Development goals
-
-1. Implement the intended Dressing Room features.
-2. Build a valid `.hmod` package.
-3. Build a valid `.hnmod` package.
-4. Validate both packages against their respective format requirements.
-5. Test both outputs in Horizon Rust and document verified compatibility.
+A successful archive/package step is not proof that a mod loads or works in-game. Each format must pass its own checks, and skin import/rendering must be tested in Horizon before being marked supported.
 
 ## Credits
 
