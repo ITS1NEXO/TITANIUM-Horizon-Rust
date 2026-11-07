@@ -1,0 +1,33 @@
+name: Build TITANIUM .hnmod
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate skin metadata core
+        run: |
+          rustc --edition=2024 --test mixins/titanium/runtime.rs -o /tmp/titanium-tests
+          /tmp/titanium-tests
+      - name: Package native mod
+        run: python scripts/package_native.py
+      - name: Upload .hnmod artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TITANIUM-hnmod
+          path: dist/*.hnmod
+          if-no-files-found: error
+          retention-days: 14
